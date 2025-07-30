@@ -1,26 +1,28 @@
 import React from 'react';
 import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
+import { useSiteSettings } from '../../contexts/SiteSettingsContext';
 
 const Footer: React.FC = () => {
-  const socialLinks = [
+  const { settings } = useSiteSettings();
+const socialLinks = [
     {
       name: 'GitHub',
-      href: 'https://github.com/yourusername',
+      href: settings.githubUrl,
       icon: Github,
     },
     {
       name: 'LinkedIn',
-      href: 'https://linkedin.com/in/yourusername',
+      href: settings.linkedinUrl,
       icon: Linkedin,
     },
     {
       name: 'Twitter',
-      href: 'https://twitter.com/yourusername',
+      href: settings.twitterUrl,
       icon: Twitter,
     },
     {
       name: 'Email',
-      href: 'mailto:your.email@example.com',
+      href: `mailto:${settings.ownerEmail}`,
       icon: Mail,
     },
   ];
@@ -32,7 +34,7 @@ const Footer: React.FC = () => {
           {/* Brand */}
           <div className="space-y-4">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              Your Name
+{settings.ownerName}
             </h3>
             <p className="text-gray-600 dark:text-gray-400 text-sm">
               Full-stack developer passionate about creating amazing web experiences.
@@ -92,7 +94,7 @@ const Footer: React.FC = () => {
         <div className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-2 md:space-y-0">
             <p className="text-gray-600 dark:text-gray-400 text-sm">
-              © {new Date().getFullYear()} Your Name. All rights reserved.
+© {new Date().getFullYear()} {settings.ownerName}. All rights reserved.
             </p>
             <p className="text-gray-600 dark:text-gray-400 text-sm">
               Built with React, TypeScript, and TailwindCSS

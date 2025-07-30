@@ -239,6 +239,12 @@ class SiteSettings(SiteSettingsBase):
         from_attributes = True
 
 
+class SiteSettingsBulkUpdate(BaseModel):
+    key: str
+    value: str
+    description: Optional[str] = None
+
+
 # Response schemas
 class MessageResponse(BaseModel):
     message: str
@@ -250,3 +256,13 @@ class PaginatedResponse(BaseModel):
     page: int
     size: int
     pages: int
+
+
+# Authentication Schemas
+class Token(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+
+
+class TokenData(BaseModel):
+    username: Optional[str] = None

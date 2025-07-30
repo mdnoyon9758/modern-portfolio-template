@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Plus, Edit, Trash2, Eye, Search } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Link, useNavigate } from 'react-router-dom';
 import { projectsApi } from '../../services/portfolioApi';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
@@ -11,21 +12,24 @@ import { Project, parseTechnologies } from '../../types/api';
 const ProjectsAdmin: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { data: projectsResponse, isLoading, error } = useQuery({
     queryKey: ['admin-projects'],
     queryFn: () => projectsApi.getAll(),
   });
 
-  // For now, we'll simulate delete functionality since the API doesn't have it
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
-      // This would be implemented when the backend API supports delete
-      console.log('Delete project with ID:', id);
-      return Promise.resolve();
+      const response = await projectsApi.delete(id);
+      return response.data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-projects'] });
+    },
+    onError: (error) => {
+      console.error('Error deleting project:', error);
+      alert('Failed to delete project. Please try again.');
     },
   });
 
@@ -64,10 +68,12 @@ const ProjectsAdmin: React.FC = () => {
                 Manage your portfolio projects
               </p>
             </div>
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              Add New Project
-            </Button>
+            <Link to="/admin/projects/new">
+              <Button>
+                <Plus className="w-4 h-4 mr-2" />
+                Add New Project
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -141,16 +147,25 @@ const ProjectsAdmin: React.FC = () => {
 
                   <div className="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
                     <div className="flex space-x-2">
-                      <button className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors">
+                      <button 
+                        onClick={() => navigate(`/projects/${project.id}`)}
+                        className="p-2 text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                        title="View Project"
+                      >
                         <Eye className="w-4 h-4" />
                       </button>
-                      <button className="p-2 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors">
+                      <button 
+                        onClick={() => navigate(`/admin/projects/edit/${project.id}`)}
+                        className="p-2 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 rounded-lg transition-colors"
+                        title="Edit Project"
+                      >
                         <Edit className="w-4 h-4" />
                       </button>
                       <button 
                         onClick={() => handleDelete(project.id, project.title)}
                         className="p-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
                         disabled={deleteMutation.isPending}
+                        title="Delete Project"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
@@ -176,10 +191,12 @@ const ProjectsAdmin: React.FC = () => {
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               {searchTerm ? 'Try adjusting your search terms.' : 'Get started by creating your first project.'}
             </p>
-            <Button>
-              <Plus className="w-4 h-4 mr-2" />
-              Add New Project
-            </Button>
+            <Link to="/admin/projects/new">
+              <Button>
+                <Plus className="w-4 h-4 mr-2" />
+                Add New Project
+              </Button>
+            </Link>
           </Card>
         )}
       </div>

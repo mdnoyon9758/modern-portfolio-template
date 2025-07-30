@@ -3,11 +3,13 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { AuthProvider } from './contexts/AuthContext';
+import { SiteSettingsProvider } from './contexts/SiteSettingsContext';
 import Layout from './components/layout/Layout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import Home from './pages/Home';
 import About from './pages/About';
 import Projects from './pages/Projects';
+import ProjectDetail from './pages/ProjectDetail';
 import Blog from './pages/Blog';
 import BlogDetail from './pages/BlogDetail';
 import Contact from './pages/Contact';
@@ -18,7 +20,10 @@ import ProjectForm from './pages/admin/ProjectForm';
 import BlogManagement from './pages/admin/BlogManagement';
 import BlogForm from './pages/admin/BlogForm';
 import ContactManagement from './pages/admin/ContactManagement';
+import MessageReader from './pages/admin/MessageReader';
 import Settings from './pages/admin/Settings';
+import SkillsManagement from './pages/admin/SkillsManagement';
+import ExperienceManagement from './pages/admin/ExperienceManagement';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -33,14 +38,16 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
-        <AuthProvider>
-          <Router>
-            <Layout>
+      <SiteSettingsProvider>
+        <ThemeProvider>
+          <AuthProvider>
+            <Router>
+              <Layout>
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/about" element={<About />} />
                 <Route path="/projects" element={<Projects />} />
+                <Route path="/projects/:id" element={<ProjectDetail />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/blog/:slug" element={<BlogDetail />} />
                 <Route path="/contact" element={<Contact />} />
@@ -87,16 +94,32 @@ function App() {
                     <ContactManagement />
                   </ProtectedRoute>
                 } />
+                <Route path="/admin/messages/read/:id" element={
+                  <ProtectedRoute>
+                    <MessageReader />
+                  </ProtectedRoute>
+                } />
                 <Route path="/admin/settings" element={
                   <ProtectedRoute>
                     <Settings />
                   </ProtectedRoute>
                 } />
+                <Route path="/admin/skills" element={
+                  <ProtectedRoute>
+                    <SkillsManagement />
+                  </ProtectedRoute>
+                } />
+                <Route path="/admin/experience" element={
+                  <ProtectedRoute>
+                    <ExperienceManagement />
+                  </ProtectedRoute>
+                } />
               </Routes>
-            </Layout>
-          </Router>
-        </AuthProvider>
-      </ThemeProvider>
+              </Layout>
+            </Router>
+          </AuthProvider>
+        </ThemeProvider>
+      </SiteSettingsProvider>
     </QueryClientProvider>
   );
 }

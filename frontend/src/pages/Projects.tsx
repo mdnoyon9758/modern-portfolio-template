@@ -6,7 +6,11 @@ import SEO from '../components/SEO';
 import Card from '../components/ui/Card';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import Button from '../components/ui/Button';
-import { ArrowRight, Github } from 'lucide-react';
+import Pagination from '../components/ui/Pagination';
+import { usePagination } from '../hooks/usePagination';
+import { scrollToTop } from '../utils/scroll';
+import { ArrowRight, Github, Eye } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Project } from '../types/api';
 
 const Projects: React.FC = () => {
@@ -14,6 +18,21 @@ const Projects: React.FC = () => {
     queryKey: ['projects', 'all'],
     queryFn: () => projectsApi.getAll().then(res => res.data),
   });
+
+  const {
+    currentPage,
+    totalPages,
+    paginatedData: paginatedProjects,
+    setCurrentPage,
+  } = usePagination({
+    data: projects || [],
+    itemsPerPage: 10,
+  });
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    scrollToTop();
+  };
 
   return (
     <>
@@ -42,8 +61,9 @@ const Projects: React.FC = () => {
             {isLoading ? (
               <LoadingSpinner size="lg" className="py-12" />
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {projects?.map((project: Project, index: number) => (
+              <>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {paginatedProjects.map((project: Project, index: number) => (
                   <motion.div
                     key={project.id}
                     initial={{ opacity: 0, y: 30 }}
@@ -75,33 +95,70 @@ const Projects: React.FC = () => {
                             </span>
                           ))}
                         </div>
-                        <div className="flex gap-3">
-                          {project.github_url && (
-                            <a
-                              href={project.github_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                            >
-                              <Github className="w-5 h-5" />
-                            </a>
-                          )}
-                          {project.live_url && (
-                            <a
-                              href={project.live_url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
-                            >
-                              <ArrowRight className="w-5 h-5" />
-                            </a>
-                          )}
+                        <div className="flex flex-col gap-3">
+                          <Link to={`/projects/${project.id}`}>
+                            <Button className="w-full flex items-center justify-center gap-2">
+                              <Eye className="w-4 h-4" />
+                              View Details
+                            </Button>
+                          </Link>
+                          <div className="flex gap-3 justify-center">
+                            {project.github_url && (
+                              <a
+                                href={project.github_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                                title="View Source Code"
+                              >
+                                <Github className="w-5 h-5" />
+                              </a>
+                            )}
+                            {project.live_url && (
+                              <a
+                                href={project.live_url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
+                                title="View Live Demo"
+                              >
+                                <ArrowRight className="w-5 h-5" />
+                              </a>
+                            )}
+                          </div>
                         </div>
                       </div>
                     </Card>
                   </motion.div>
-                ))}
-              </div>
+                  ))}
+                </div>
+                
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    className="mt-12"
+                  >
+                    <Pagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      onPageChange={handlePageChange}
+                    />
+                  </motion.div>
+                )}
+                
+                {/* Results Info */}
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                  className="text-center mt-8 text-gray-600 dark:text-gray-400"
+                >
+                  Showing {Math.min((currentPage - 1) * 10 + 1, projects?.length || 0)} - {Math.min(currentPage * 10, projects?.length || 0)} of {projects?.length || 0} projects
+                </motion.div>
+              </>
             )}
           </div>
         </section>

@@ -95,3 +95,17 @@ def delete_site_setting(
         raise HTTPException(status_code=404, detail="Site setting not found")
     setting = site_settings.remove(db=db, id=id)
     return setting
+
+
+@router.post("/bulk-update", response_model=List[schemas.SiteSettings])
+def bulk_update_site_settings(
+    *,
+    db: Session = Depends(deps.get_db),
+    settings_in: List[schemas.SiteSettingsBulkUpdate],
+) -> Any:
+    """
+    Bulk update site settings.
+    """
+    settings_data = [item.dict() for item in settings_in]
+    updated_settings = site_settings.bulk_update(db=db, settings_data=settings_data)
+    return updated_settings

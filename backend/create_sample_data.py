@@ -120,6 +120,17 @@ projects_data = [
         "image_url": "https://images.unsplash.com/photo-1561736778-92e52a7769ef?w=800&h=600&fit=crop",
         "featured": False,
         "order_index": 10
+    },
+    {
+        "title": "Another E-Commerce Platform",
+        "description": "<h2>Another Full-Stack E-Commerce Solution</h2><p>A comprehensive e-commerce platform built with modern technologies. Features include user authentication, product management, shopping cart, payment integration, and admin dashboard.</p><h3>Key Features:</h3><ul><li>User registration and authentication</li><li>Product catalog with search and filtering</li><li>Shopping cart and checkout process</li><li>Payment integration with Stripe</li><li>Order management system</li><li>Admin dashboard for inventory management</li></ul>",
+        "short_description": "Full-featured e-commerce platform with payment integration and admin dashboard.",
+        "technologies": "['React', 'Node.js', 'Express', 'MongoDB', 'Stripe API', 'JWT', 'Redux']",
+        "github_url": "https://github.com/abdullah/ecommerce-platform-2",
+        "live_url": "https://ecommerce-demo-2.abdullah.dev",
+        "image_url": "https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&h=600&fit=crop",
+        "featured": True,
+        "order_index": 11
     }
 ]
 
@@ -234,11 +245,29 @@ blog_posts_data = [
         "published": True,
         "featured": False,
         "reading_time": 12
+    },
+    {
+        "title": "Another Post about Web Development",
+        "slug": "another-post-about-web-development",
+        "content": "<h2>Another Post about Web Development</h2><p>Asynchronous programming is fundamental to JavaScript development. Whether you're fetching data from APIs, handling user interactions, or managing timers, understanding async patterns is crucial.</p><h3>Evolution of Async JavaScript</h3><p>JavaScript has evolved significantly in handling asynchronous operations:</p><ul><li>Callbacks (traditional approach)</li><li>Promises (ES6)</li><li>Async/Await (ES2017)</li></ul><h3>Promises: A Better Way</h3><p>Promises provide a cleaner way to handle asynchronous operations:</p><pre><code>fetch('/api/data')\n  .then(response => response.json())\n  .then(data => console.log(data))\n  .catch(error => console.error(error));</code></pre><h3>Async/Await: Even Cleaner</h3><p>Async/await makes asynchronous code look synchronous:</p><pre><code>async function fetchData() {\n  try {\n    const response = await fetch('/api/data');\n    const data = await response.json();\n    console.log(data);\n  } catch (error) {\n    console.error(error);\n  }\n}</code></pre><h3>Advanced Patterns</h3><p>Learn about advanced async patterns like Promise.all(), Promise.race(), and error handling strategies that will make you a more effective JavaScript developer.</p>",
+        "excerpt": "Deep dive into asynchronous JavaScript patterns including Promises, async/await, and advanced error handling techniques.",
+        "tags": "JavaScript,Async,Promises,Web Development",
+        "featured_image": "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=800&h=600&fit=crop",
+        "published": True,
+        "featured": True,
+        "reading_time": 12
     }
 ]
 
 def add_sample_data(db: Session):
     """Add sample projects and blog posts to the database."""
+    logger.info("Clearing existing data...")
+    
+    # Clear existing data
+    db.query(BlogPost).delete()
+    db.query(Project).delete()
+    db.commit()
+    
     logger.info("Adding sample projects...")
     
     # Insert sample projects

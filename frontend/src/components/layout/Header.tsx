@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { Moon, Sun, Menu, X, Settings } from 'lucide-react';
 import { useTheme } from '../../contexts/ThemeContext';
 import { useAuth } from '../../contexts/AuthContext';
-import BinaryText from '../ui/BinaryText';
 
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
@@ -32,11 +31,9 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="block">
-            <BinaryText 
-              text="Portfolio" 
-              label="BRAND" 
-              className="scale-75 -my-2" 
-            />
+            <div className="text-xl font-bold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 transition-colors">
+              Portfolio
+            </div>
           </Link>
 
           {/* Desktop Navigation */}

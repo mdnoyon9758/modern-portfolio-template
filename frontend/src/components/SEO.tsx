@@ -1,8 +1,9 @@
 import React from 'react';
+import { useSiteSettings } from '../contexts/SiteSettingsContext';
 
 interface SEOProps {
   title: string;
-  description: string;
+  description?: string;
   keywords?: string;
   image?: string;
   url?: string;
@@ -11,13 +12,20 @@ interface SEOProps {
 
 const SEO: React.FC<SEOProps> = ({ 
   title, 
-  description, 
-  keywords = "web developer, full stack developer, react developer, portfolio",
-  image = "/og-image.jpg",
-  url = window.location.href,
+  description: propDescription,
+  keywords: propKeywords,
+  image: propImage,
+  url: propUrl,
   type = "website"
 }) => {
-  const fullTitle = title === "Home" ? "Your Name - Full Stack Developer" : `${title} | Your Name`;
+  const { settings } = useSiteSettings();
+
+  const fullTitle = title === "Home" ? settings.metaTitle : `${title} | ${settings.siteName}`;
+  const description = propDescription || settings.metaDescription;
+  const keywords = propKeywords || settings.metaKeywords;
+  const image = propImage || settings.heroImageUrl || "/og-image.jpg";
+  const url = propUrl || settings.siteUrl || window.location.href;
+  const twitterUsername = settings.twitterUsername;
 
   React.useEffect(() => {
     // Update document title
@@ -52,7 +60,7 @@ const SEO: React.FC<SEOProps> = ({
       { property: 'og:image', content: image },
       { property: 'og:url', content: url },
       { property: 'og:type', content: type },
-      { property: 'og:site_name', content: 'Your Name Portfolio' },
+      { property: 'og:site_name', content: settings.siteName },
     ];
 
     ogTags.forEach(({ property, content }) => {
@@ -73,7 +81,7 @@ const SEO: React.FC<SEOProps> = ({
       { name: 'twitter:title', content: fullTitle },
       { name: 'twitter:description', content: description },
       { name: 'twitter:image', content: image },
-      { name: 'twitter:creator', content: '@yourusername' },
+      { name: 'twitter:creator', content: twitterUsername },
     ];
 
     twitterTags.forEach(({ name, content }) => {
@@ -103,14 +111,14 @@ const SEO: React.FC<SEOProps> = ({
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "Person",
-      "name": "Your Name",
-      "jobTitle": "Full Stack Developer",
+      "name": settings.ownerName,
+      "jobTitle": settings.heroSubtitle,
       "url": window.location.origin,
       "sameAs": [
-        "https://github.com/yourusername",
-        "https://linkedin.com/in/yourusername",
-        "https://twitter.com/yourusername"
-      ],
+        settings.githubUrl,
+        settings.linkedinUrl,
+        settings.twitterUrl
+      ].filter(Boolean),
       "worksFor": {
         "@type": "Organization",
         "name": "Freelance"

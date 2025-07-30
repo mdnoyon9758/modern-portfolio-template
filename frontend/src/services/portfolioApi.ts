@@ -39,6 +39,8 @@ export const contactApi = {
   submit: (data: ContactFormData) => api.post<MessageResponse>('/contact/', data),
   testEmail: () => api.post<MessageResponse>('/contact/test-email'),
   getAll: () => api.get<ContactMessage[]>('/contact/'),
+  getById: (id: number) => api.get<ContactMessage>(`/contact/${id}`),
+  delete: (id: number) => api.delete(`/contact/${id}`),
 };
 
 // Skills API
@@ -81,6 +83,7 @@ export const siteSettingsApi = {
   getById: (id: number) => api.get<SiteSettings>(`/site-settings/${id}`),
   create: (data: Omit<SiteSettings, 'id' | 'created_at' | 'updated_at'>) => api.post<SiteSettings>('/site-settings/', data),
   update: (id: number, data: Partial<SiteSettings>) => api.put<SiteSettings>(`/site-settings/${id}`, data),
+  updateAll: (settings: Array<{key: string, value: string, description?: string}>) => api.post('/site-settings/bulk-update', settings),
   delete: (id: number) => api.delete(`/site-settings/${id}`),
 };
 
@@ -94,6 +97,20 @@ export const portfolioApi = {
   
   // Education
   getEducation: () => educationApi.getAll(),
+};
+
+// Media API
+export const mediaApi = {
+  getAllImages: () => api.get<string[]>('/media/'),
+  uploadImage: (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    return api.post<{filename: string; url: string}>('/media/upload', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  },
 };
 
 // Health check

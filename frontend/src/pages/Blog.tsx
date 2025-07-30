@@ -1,33 +1,54 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { blogApi } from '../services/portfolioApi';
+import { useSiteSettings } from '../contexts/SiteSettingsContext';
 import SEO from '../components/SEO';
 import Card from '../components/ui/Card';
 import LoadingSpinner from '../components/ui/LoadingSpinner';
 import Button from '../components/ui/Button';
+import Pagination from '../components/ui/Pagination';
+import { usePagination } from '../hooks/usePagination';
+import { scrollToTop } from '../utils/scroll';
 import { Search, Calendar, Clock, Tag, ArrowRight } from 'lucide-react';
 import { BlogPost } from '../types/api';
 
 const Blog: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+const { settings } = useSiteSettings();
 
   const { data: posts, isLoading } = useQuery({
     queryKey: ['blog', 'published'],
     queryFn: () => blogApi.getPublished().then(res => res.data),
   });
 
-  // Get unique categories from posts (removed category feature)
-  const categories = ['all'];
-
   // Filter posts based on search
   const filteredPosts = posts?.filter((post: BlogPost) => {
     const matchesSearch = post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          post.excerpt?.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesSearch;
+  }) || [];
+
+  const {
+    currentPage,
+    totalPages,
+    paginatedData: paginatedPosts,
+    setCurrentPage,
+  } = usePagination({
+    data: filteredPosts,
+    itemsPerPage: 10,
   });
+
+  // Reset to first page when search term changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, setCurrentPage]);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    scrollToTop();
+  };
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
@@ -84,41 +105,26 @@ const Blog: React.FC = () => {
                 />
               </div>
 
-              {/* Category Filter */}
-              <div className="flex flex-wrap gap-2">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => setSelectedCategory(category)}
-                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      selectedCategory === category
-                        ? 'bg-primary-600 text-white'
-                        : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-600'
-                    }`}
-                  >
-                    {category.charAt(0).toUpperCase() + category.slice(1)}
-                  </button>
-                ))}
-              </div>
             </motion.div>
 
             {/* Blog Posts */}
             {isLoading ? (
               <LoadingSpinner size="lg" className="py-12" />
             ) : (
-              <div className="space-y-8">
-                {filteredPosts?.length === 0 ? (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-center py-12"
-                  >
-                    <p className="text-gray-600 dark:text-gray-400 text-lg">
-                      No posts found matching your criteria.
-                    </p>
-                  </motion.div>
-                ) : (
-                  filteredPosts?.map((post: BlogPost, index: number) => (
+              <>
+                <div className="space-y-8">
+                  {paginatedPosts.length === 0 ? (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="text-center py-12"
+                    >
+                      <p className="text-gray-600 dark:text-gray-400 text-lg">
+                        {searchTerm ? 'No posts found matching your search.' : 'No posts available.'}
+                      </p>
+                    </motion.div>
+                  ) : (
+                    paginatedPosts.map((post: BlogPost, index: number) => (
                     <motion.article
                       key={post.id}
                       initial={{ opacity: 0, y: 30 }}
@@ -181,7 +187,7 @@ const Blog: React.FC = () => {
                             
                             <div className="flex items-center justify-between">
                               <div className="text-sm text-gray-500 dark:text-gray-400">
-                                By Your Name
+By {settings.blogAuthorName}
                               </div>
                               <Button variant="secondary" size="sm">
                                 <Link to={`/blog/${post.slug}`} className="flex items-center gap-2">
@@ -194,9 +200,38 @@ const Blog: React.FC = () => {
                         </div>
                       </Card>
                     </motion.article>
-                  ))
+                    ))
+                  )}
+                </div>
+                
+                {/* Pagination */}
+                {totalPages > 1 && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: 0.3 }}
+                    className="mt-12"
+                  >
+                    <Pagination
+                      currentPage={currentPage}
+                      totalPages={totalPages}
+                      onPageChange={handlePageChange}
+                    />
+                  </motion.div>
                 )}
-              </div>
+                
+                {/* Results Info */}
+                {filteredPosts.length > 0 && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    className="text-center mt-8 text-gray-600 dark:text-gray-400"
+                  >
+                    Showing {Math.min((currentPage - 1) * 10 + 1, filteredPosts.length)} - {Math.min(currentPage * 10, filteredPosts.length)} of {filteredPosts.length} {searchTerm ? 'matching posts' : 'posts'}
+                  </motion.div>
+                )}
+              </>
             )}
 
             {/* Newsletter Signup */}

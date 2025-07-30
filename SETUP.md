@@ -77,7 +77,7 @@ REACT_APP_ENVIRONMENT=development
 1. Create a new repository on GitHub
 2. Add remote origin:
 ```bash
-git remote add origin https://github.com/yourusername/portfolio-website.git
+git remote add origin https://github.com/MDnoyon9758/modern-portfolio-template.git
 git branch -M main
 git push -u origin main
 ```
@@ -150,14 +150,22 @@ portfolio-website/
 
 ### Frontend
 - `npm start` - Development server
-- `npm build` - Production build
+- `npm run build` - Production build
 - `npm test` - Run tests
+- `npm run lint` - Run ESLint
+- `npm run lint:fix` - Fix ESLint issues
+- `npm run format` - Format code with Prettier
+- `npm run format:check` - Check code formatting
 
 ### Backend
 - `uvicorn app.main:app --reload` - Development server
 - `python initialize_db.py` - Initialize database
 - `python create_sample_data.py` - Add sample data
 - `python -m pytest tests/` - Run tests
+- `black .` - Format code with Black
+- `black --check .` - Check code formatting
+- `ruff check .` - Run linting with Ruff
+- `ruff check . --fix` - Fix linting issues
 
 ## 🔍 Troubleshooting
 

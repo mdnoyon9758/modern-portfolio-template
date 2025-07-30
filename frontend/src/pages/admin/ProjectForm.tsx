@@ -4,6 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { projectsApi } from '../../services/portfolioApi';
 import Card from '../../components/ui/Card';
 import Button from '../../components/ui/Button';
+import FileUploadInput from '../../components/ui/FileUploadInput';
 import { Save, ArrowLeft, Upload, X } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Project } from '../../types/api';
@@ -313,38 +314,22 @@ const ProjectForm: React.FC = () => {
                     )}
                   </div>
 
-                  <div>
-                    <label htmlFor="image_url" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-                      Project Image URL
-                    </label>
-                    <input
-                      type="url"
-                      id="image_url"
-                      name="image_url"
-                      value={formData.image_url}
-                      onChange={handleChange}
-                      className={`w-full px-3 py-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white ${
-                        errors.image_url ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
-                      } focus:ring-2 focus:ring-primary-500 focus:border-transparent`}
-                      placeholder="https://example.com/image.jpg"
-                    />
-                    {errors.image_url && (
-                      <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.image_url}</p>
-                    )}
-                  </div>
-
-                  {formData.image_url && (
-                    <div>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Preview:</p>
-                      <img
-                        src={formData.image_url}
-                        alt="Project preview"
-                        className="w-full h-48 object-cover rounded-lg"
-                        onError={(e) => {
-                          (e.target as HTMLImageElement).style.display = 'none';
-                        }}
-                      />
-                    </div>
+                  <FileUploadInput
+                    label="Project Image"
+                    value={formData.image_url}
+                    onChange={(value) => {
+                      setFormData(prev => ({ ...prev, image_url: value }));
+                      // Clear error when user updates the image
+                      if (errors.image_url) {
+                        setErrors(prev => ({ ...prev, image_url: undefined }));
+                      }
+                    }}
+                    accept="image/*"
+                    placeholder="Enter image URL or upload image"
+                    description="Upload project screenshot or banner image"
+                  />
+                  {errors.image_url && (
+                    <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.image_url}</p>
                   )}
                 </div>
               </Card>

@@ -10,10 +10,17 @@ import {
   Users,
   Plus,
   Eye,
-  Edit3
+  Edit3,
+  List,
+  MessageSquare,
+  PenTool,
+  Briefcase,
+  Archive,
+  Trash2
 } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import Card from '../../components/ui/Card';
+import Button from '../../components/ui/Button';
 
 const Dashboard: React.FC = () => {
   const { user, logout } = useAuth();
@@ -82,119 +89,92 @@ const Dashboard: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-      {/* Header */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-6">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
-                Admin Dashboard
-              </h1>
-              <p className="text-gray-600 dark:text-gray-400">
-                Welcome back, {user}!
-              </p>
-            </div>
-            <button 
-              onClick={logout}
-              className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat, index) => {
-            const Icon = stat.icon;
-            return (
-              <motion.div
-                key={stat.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
-                <Card className="p-6">
-                  <div className="flex items-center">
-                    <div className={`p-3 rounded-lg ${stat.bgColor}`}>
-                      <Icon className={`w-6 h-6 ${stat.color}`} />
-                    </div>
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
-                        {stat.title}
-                      </p>
-                      <p className="text-2xl font-bold text-gray-900 dark:text-white">
-                        {stat.value}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            );
-          })}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Admin Dashboard</h1>
+          <p className="text-gray-600 dark:text-gray-400 mt-1">Welcome back, {user}!</p>
         </div>
 
-        {/* Quick Actions */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="mb-8"
-        >
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
-            Quick Actions
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {quickActions.map((action, index) => {
-              const Icon = action.icon;
-              return (
-                <Link
-                  key={action.title}
-                  to={action.href}
-                  className="block"
-                >
-                  <Card hover className="p-6 h-full">
-                    <div className="flex flex-col items-center text-center">
-                      <div className={`p-3 rounded-lg ${action.color} text-white mb-4`}>
-                        <Icon className="w-6 h-6" />
-                      </div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white mb-2">
-                        {action.title}
-                      </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                        {action.description}
-                      </p>
-                    </div>
-                  </Card>
+        {/* Management Sections */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {/* Blog Management */}
+          <Card>
+            <div className="p-6">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 rounded-lg bg-green-100 dark:bg-green-900/20">
+                  <PenTool className="w-6 h-6 text-green-600" />
+                </div>
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Blog</h2>
+              </div>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">Manage your blog posts, including creating, editing, and deleting articles.</p>
+              <div className="space-y-3">
+                <Link to="/admin/blog/new" className="block">
+                  <Button fullWidth variant="secondary" icon={<Plus className="w-4 h-4" />}>Create Post</Button>
                 </Link>
-              );
-            })}
-          </div>
-        </motion.div>
-
-        {/* Recent Activity */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
-        >
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">
-            Recent Activity
-          </h2>
-          <Card className="p-6">
-            <div className="text-center py-8">
-              <Users className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                No recent activity
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Activity will appear here as you manage your portfolio content.
-              </p>
+                <Link to="/admin/blog" className="block">
+                  <Button fullWidth variant="outline" icon={<List className="w-4 h-4" />}>Manage Posts</Button>
+                </Link>
+              </div>
             </div>
           </Card>
-        </motion.div>
+
+          {/* Project Management */}
+          <Card>
+            <div className="p-6">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 rounded-lg bg-blue-100 dark:bg-blue-900/20">
+                  <Briefcase className="w-6 h-6 text-blue-600" />
+                </div>
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Projects</h2>
+              </div>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">Manage your portfolio projects, including creating, editing, and deleting entries.</p>
+              <div className="space-y-3">
+                <Link to="/admin/projects/new" className="block">
+                  <Button fullWidth variant="secondary" icon={<Plus className="w-4 h-4" />}>Create Project</Button>
+                </Link>
+                <Link to="/admin/projects" className="block">
+                  <Button fullWidth variant="outline" icon={<List className="w-4 h-4" />}>Manage Projects</Button>
+                </Link>
+              </div>
+            </div>
+          </Card>
+
+          {/* Messages Management */}
+          <Card>
+            <div className="p-6">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 rounded-lg bg-purple-100 dark:bg-purple-900/20">
+                  <MessageSquare className="w-6 h-6 text-purple-600" />
+                </div>
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Messages</h2>
+              </div>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">View and manage incoming contact messages from your users.</p>
+              <div className="space-y-3">
+                <Link to="/admin/messages" className="block">
+                  <Button fullWidth variant="outline" icon={<Eye className="w-4 h-4" />}>View Messages</Button>
+                </Link>
+              </div>
+            </div>
+          </Card>
+
+          {/* Site Settings */}
+          <Card>
+            <div className="p-6">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 rounded-lg bg-gray-100 dark:bg-gray-700/20">
+                  <Settings className="w-6 h-6 text-gray-600" />
+                </div>
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Settings</h2>
+              </div>
+              <p className="text-gray-600 dark:text-gray-400 mb-6">Manage your site-wide settings and configurations.</p>
+              <div className="space-y-3">
+                <Link to="/admin/settings" className="block">
+                  <Button fullWidth variant="outline" icon={<Edit3 className="w-4 h-4" />}>Edit Settings</Button>
+                </Link>
+              </div>
+            </div>
+          </Card>
+        </div>
       </div>
     </div>
   );

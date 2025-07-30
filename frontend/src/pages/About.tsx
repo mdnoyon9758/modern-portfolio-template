@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Download, Mail, MapPin, Calendar, Code, Briefcase, GraduationCap } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { portfolioApi } from '../services/portfolioApi';
+import { useSiteSettings } from '../contexts/SiteSettingsContext';
 import SEO from '../components/SEO';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
@@ -10,6 +11,8 @@ import LoadingSpinner from '../components/ui/LoadingSpinner';
 import { Skill, Experience, Education } from '../types/api';
 
 const About: React.FC = () => {
+const { settings } = useSiteSettings();
+
   const { data: skills, isLoading: skillsLoading } = useQuery({
     queryKey: ['skills'],
     queryFn: () => portfolioApi.getSkills().then(res => res.data),
@@ -26,27 +29,15 @@ const About: React.FC = () => {
   });
 
   const personalInfo = {
-    name: "Your Name",
-    title: "Full-Stack Developer",
-    location: "Your City, Country",
-    email: "your.email@example.com",
-    yearsOfExperience: 5,
-    bio: `I'm a passionate full-stack developer with ${5} years of experience creating 
-    beautiful, functional, and user-friendly web applications. I specialize in modern 
-    JavaScript frameworks, cloud technologies, and agile development practices. 
-    
-    My journey in tech started with a curiosity about how websites work, and it has 
-    evolved into a career where I get to solve complex problems and build solutions 
-    that make a real impact. I'm always eager to learn new technologies and take on 
-    challenging projects that push my skills to the next level.`,
-    interests: [
-      "Web Development",
-      "Cloud Architecture",
-      "Open Source",
-      "Machine Learning",
-      "UI/UX Design",
-      "Blockchain Technology"
-    ]
+    name: settings.ownerName,
+    title: settings.heroSubtitle,
+    location: settings.ownerLocation,
+    email: settings.ownerEmail,
+    yearsOfExperience: settings.yearsOfExperience,
+    bio: settings.aboutBio,
+    interests: settings.aboutInterests.split(',').map(interest => interest.trim()),
+    resumeUrl: settings.resumeUrl,
+    profileImageUrl: settings.profileImageUrl
   };
 
   const stats = [

@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Github, Linkedin, Twitter, Loader2 } from 'lucide-react';
 import { useMutation } from '@tanstack/react-query';
+import { Send, Github, Linkedin, Twitter, Mail, Phone, MapPin, Loader2 } from 'lucide-react';
 import { contactApi } from '../services/portfolioApi';
 import SEO from '../components/SEO';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
-import BinaryText from '../components/ui/BinaryText';
+import InfoCard from '../components/ui/InfoCard';
 import { ContactFormData } from '../types/api';
+import { useSiteSettings } from '../contexts/SiteSettingsContext';
 
 const Contact: React.FC = () => {
+  const { settings } = useSiteSettings();
+  
   const [formData, setFormData] = useState<ContactFormData>({
     name: '',
     email: '',
@@ -42,23 +45,23 @@ const Contact: React.FC = () => {
   const socialLinks = [
     {
       name: 'GitHub',
-      href: 'https://github.com/yourusername',
+      href: settings.githubUrl,
       icon: Github,
       color: 'hover:text-gray-900 dark:hover:text-white',
     },
     {
       name: 'LinkedIn',
-      href: 'https://linkedin.com/in/yourusername',
+      href: settings.linkedinUrl,
       icon: Linkedin,
       color: 'hover:text-blue-600',
     },
     {
       name: 'Twitter',
-      href: 'https://twitter.com/yourusername',
+      href: settings.twitterUrl,
       icon: Twitter,
       color: 'hover:text-blue-400',
     },
-  ];
+  ].filter(link => link.href && link.href !== '');
 
   return (
     <>
@@ -109,55 +112,28 @@ const Contact: React.FC = () => {
                   </p>
                 </div>
 
-                {/* Contact Information with BinaryText */}
+                {/* Contact Information */}
                 <div className="space-y-6">
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                  >
-                    <Card hover={false} className="p-6">
-                      <div className="space-y-4">
-                        <BinaryText 
-                          text="developer@example.com" 
-                          label="EMAIL" 
-                          delay={0.3}
-                        />
-                      </div>
-                    </Card>
-                  </motion.div>
+                  <InfoCard
+                    text={settings.ownerEmail}
+                    label="EMAIL"
+                    icon={<Mail className="w-5 h-5" />}
+                    delay={0.3}
+                  />
                   
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                  >
-                    <Card hover={false} className="p-6">
-                      <div className="space-y-4">
-                        <BinaryText 
-                          text="+1 (555) 123-4567" 
-                          label="PHONE" 
-                          delay={0.5}
-                        />
-                      </div>
-                    </Card>
-                  </motion.div>
+                  <InfoCard
+                    text={settings.ownerPhone}
+                    label="PHONE"
+                    icon={<Phone className="w-5 h-5" />}
+                    delay={0.5}
+                  />
                   
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.6 }}
-                  >
-                    <Card hover={false} className="p-6">
-                      <div className="space-y-4">
-                        <BinaryText 
-                          text="San Francisco, CA" 
-                          label="LOCATION" 
-                          delay={0.7}
-                        />
-                      </div>
-                    </Card>
-                  </motion.div>
+                  <InfoCard
+                    text={settings.ownerLocation}
+                    label="LOCATION"
+                    icon={<MapPin className="w-5 h-5" />}
+                    delay={0.7}
+                  />
                 </div>
 
                 {/* Social Links */}
@@ -230,7 +206,7 @@ const Contact: React.FC = () => {
                             value={formData.name}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
-                            placeholder="Your Name"
+placeholder={settings.ownerName}
                           />
                         </div>
                         <div>
@@ -245,7 +221,7 @@ const Contact: React.FC = () => {
                             value={formData.email}
                             onChange={handleChange}
                             className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white transition-colors"
-                            placeholder="your.email@example.com"
+placeholder={settings.ownerEmail}
                           />
                         </div>
                       </div>

@@ -1,6 +1,8 @@
-# Personal Portfolio Website 🚀
+# Modern Portfolio Template 🚀
 
-**A comprehensive, secure, and modern full-stack portfolio website** built with enhanced UI/UX, advanced security features, and comprehensive logging.
+**A comprehensive, secure, and modern full-stack portfolio website template** built with enhanced UI/UX, advanced security features, and comprehensive logging.
+
+**Created by Abdullah** - A professional portfolio template ready for customization and deployment.
 
 ✨ **Recently Enhanced with:**
 - 🎨 Advanced animations and UI components
@@ -49,13 +51,29 @@ portfolio-website/
 
 ## Features
 
-- 🏠 **Home**: Hero section with introduction
-- 👤 **About**: Personal information and skills
-- 🚀 **Projects**: Dynamic project showcase from database
-- 📝 **Blog**: Dynamic blog posts from database
-- 📧 **Contact**: Form with email notifications
-- 🌙 **Dark/Light Mode**: Toggle theme
-- 📱 **Responsive Design**: Mobile-first approach
+- 🏠 **Home**: Beautifully designed hero section with an introduction
+- 👤 **About**: Share your personal story, skills, and experience
+- 🚀 **Projects**: Showcase your work with a dynamic project gallery
+- 📝 **Blog**: Write and display blog posts with full markdown support
+- 📧 **Contact**: A functional contact form with email notifications
+- 🌙 **Dark/Light Mode**: Seamless theme switching for user comfort
+- 📱 **Responsive Design**: Fully responsive and mobile-first
+
+## ✨ Live Demo
+
+Check out the live demo here: [https://your-live-demo-url.com](https://your-live-demo-url.com)
+
+*(Replace the link above with your deployed project URL)*
+
+## 📸 Screenshots
+
+*(Add screenshots of your project here. For example:)*
+
+**Homepage (Light Mode)**
+![Homepage Light](https://via.placeholder.com/800x400.png/FFFFFF/000000?text=Homepage+Light+Mode)
+
+**Projects Page (Dark Mode)**
+![Projects Dark](https://via.placeholder.com/800x400.png/000000/FFFFFF?text=Projects+Page+Dark+Mode)
 
 ## Tech Stack
 
@@ -107,3 +125,51 @@ See `config/` directory for environment variable templates.
 ## Deployment
 
 Detailed deployment instructions are in the `deployment/` directory.
+
+## 📖 Documentation
+
+For comprehensive setup and deployment instructions, see:
+- [SETUP.md](SETUP.md) - Complete setup guide
+- [Backend README](backend/README.md) - Backend-specific documentation
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Support
+
+This is a commercial template created by **Abdullah**. For support:
+
+### 📧 Contact Information
+- **Email:** Mdnoyon9758@gmail.com
+- **GitHub:** [@MDnoyon9758](https://github.com/MDnoyon9758)
+
+### Getting Help
+1. Check the documentation files first ([SETUP.md](SETUP.md))
+2. Review the troubleshooting section in the setup guide
+3. For technical questions, create an issue in this repository
+4. For direct support, email the creator
+
+**Note:** This template is provided "as-is" with no warranty. Support includes documentation and basic setup assistance.
+
+## 🌟 Features Overview
+
+### Security Features
+- 🔐 JWT authentication
+- 🛡️ Security headers (CSP, HSTS, etc.)
+- 🚫 Rate limiting
+- 🔍 Input validation and sanitization
+- 📝 Comprehensive logging
+
+### Developer Experience
+- 🧪 Full test suite with CI/CD
+- 🎨 Code formatting (Prettier, Black)
+- 🔧 Linting (ESLint, Ruff)
+- 🤖 Automated dependency updates
+- 📦 Easy deployment configuration
+
+### Performance
+- ⚡ Optimized React components
+- 🗜️ GZIP compression
+- 📱 Responsive design
+- 🎯 SEO optimized

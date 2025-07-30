@@ -44,5 +44,43 @@ class CRUDSiteSettings:
         db.delete(obj)
         db.commit()
         return obj
+    
+    def bulk_update(self, db: Session, *, settings_data: list) -> list:
+        """
+        Bulk update or create site settings.
+        """
+        updated_settings = []
+        
+        for setting_data in settings_data:
+            key = setting_data['key']
+            value = setting_data['value']
+            description = setting_data.get('description')
+            
+            # Try to find existing setting by key
+            existing_setting = self.get_by_key(db=db, key=key)
+            
+            if existing_setting:
+                # Update existing setting
+                update_data = {'value': value}
+                if description is not None:
+                    update_data['description'] = description
+                
+                updated_setting = self.update(
+                    db=db, 
+                    db_obj=existing_setting, 
+                    obj_in=update_data
+                )
+                updated_settings.append(updated_setting)
+            else:
+                # Create new setting
+                create_data = schemas.SiteSettingsCreate(
+                    key=key,
+                    value=value,
+                    description=description
+                )
+                new_setting = self.create(db=db, obj_in=create_data)
+                updated_settings.append(new_setting)
+        
+        return updated_settings
 
 site_settings = CRUDSiteSettings()

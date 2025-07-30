@@ -111,7 +111,7 @@ const Login: React.FC = () => {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              Demo credentials: admin / password
+              Demo credentials: admin / admin
             </p>
           </div>
         </Card>

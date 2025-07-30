@@ -10,8 +10,7 @@ from app.models import models
 from app.core.middleware import (
     SecurityMiddleware,
     RequestLoggingMiddleware,
-    InputValidationMiddleware,
-    CORSSecurityMiddleware
+    InputValidationMiddleware
 )
 from app.core.security import SECURITY_HEADERS
 
@@ -47,6 +46,11 @@ app.add_middleware(
     allow_methods=["*"],  # Allow all methods
     allow_headers=["*"],  # Allow all headers
 )
+
+# Add security middleware
+app.add_middleware(SecurityMiddleware, rate_limit_requests=100, rate_limit_window=60)
+app.add_middleware(InputValidationMiddleware)
+app.add_middleware(RequestLoggingMiddleware)
 
 # Add compression middleware
 app.add_middleware(GZipMiddleware, minimum_size=1000)

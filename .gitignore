@@ -83,11 +83,11 @@ htmlcov/
 .dmypy.json
 dmypy.json
 
-# Alembic
-alembic/versions/*.py
-!alembic/versions/
+# Alembic - Keep migration files but ignore __pycache__
+alembic/versions/__pycache__/
 
-# Deployment secrets
+# Deployment secrets - actual files should be created from templates
+# Templates (.example files) are committed
 fly.toml
 vercel.json
 
