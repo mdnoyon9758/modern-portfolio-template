@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CORS Test</title>
+</head>
+<body>
+    <h1>CORS Test</h1>
+    <button onclick="testCORS()">Test CORS POST</button>
+    <div id="result"></div>
+
+    <script>
+        async function testCORS() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = 'Testing...';
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/v1/blog/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        title: 'Test Post',
+                        content: 'This is a test post',
+                        excerpt: 'Test excerpt',
+                        slug: 'test-post',
+                        status: 'draft',
+                        is_featured: false
+                    })
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    resultDiv.innerHTML = `<div style="color: green;">SUCCESS: ${JSON.stringify(data)}</div>`;
+                } else {
+                    const errorData = await response.text();
+                    resultDiv.innerHTML = `<div style="color: red;">ERROR: ${response.status} - ${errorData}</div>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<div style="color: red;">ERROR: ${error.message}</div>`;
+            }
+        }
+    </script>
+</body>
+</html>

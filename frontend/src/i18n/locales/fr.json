@@ -1,0 +1,77 @@
+{
+  "common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "cancel": "Annuler",
+    "confirm": "Confirmer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "save": "Sauvegarder",
+    "close": "Fermer",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "search": "Rechercher",
+    "filter": "Filtrer",
+    "sort": "Trier",
+    "download": "Télécharger",
+    "upload": "Téléverser",
+    "share": "Partager",
+    "copy": "Copier",
+    "copied": "Copié !",
+    "view_more": "Voir Plus",
+    "view_less": "Voir Moins",
+    "read_more": "Lire Plus",
+    "learn_more": "En Savoir Plus"
+  },
+  "navigation": {
+    "home": "Accueil",
+    "about": "À Propos",
+    "projects": "Projets",
+    "blog": "Blog",
+    "contact": "Contact",
+    "portfolio": "Portfolio"
+  },
+  "hero": {
+    "greeting": "Bonjour, je suis",
+    "title": "Développeur Full-Stack",
+    "subtitle": "Je crée des expériences web incroyables avec des technologies modernes",
+    "cta_primary": "Voir Mon Travail",
+    "cta_secondary": "Me Contacter"
+  },
+  "about": {
+    "title": "À Propos de Moi",
+    "subtitle": "Développeur passionné avec une expertise en technologies web modernes",
+    "description": "Je suis un développeur full-stack avec {{years}} années d'expérience dans la création d'applications web évolutives. Je me spécialise dans React, Node.js, Python et les technologies cloud.",
+    "skills_title": "Compétences et Technologies",
+    "experience_title": "Expérience",
+    "education_title": "Éducation"
+  },
+  "projects": {
+    "title": "Mes Projets",
+    "subtitle": "Une collection de mon travail récent et de mes projets personnels",
+    "view_project": "Voir le Projet",
+    "view_code": "Voir le Code",
+    "live_demo": "Démo en Direct",
+    "technologies_used": "Technologies Utilisées",
+    "project_details": "Détails du Projet",
+    "featured_projects": "Projets en Vedette",
+    "all_projects": "Tous les Projets",
+    "filter_by_tech": "Filtrer par Technologie"
+  },
+  "contact": {
+    "title": "Prenons Contact",
+    "subtitle": "Parlons de votre projet ou dites simplement bonjour",
+    "form": {
+      "name": "Nom",
+      "email": "E-mail",
+      "subject": "Sujet",
+      "message": "Message",
+      "send": "Envoyer le Message",
+      "sending": "Envoi en cours...",
+      "success": "Message envoyé avec succès ! Je vous répondrai bientôt.",
+      "error": "Échec de l'envoi du message. Veuillez réessayer ou me contacter directement."
+    }
+  }
+}

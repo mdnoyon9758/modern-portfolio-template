@@ -1,0 +1,157 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "delete": "Delete",
+    "edit": "Edit",
+    "save": "Save",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "download": "Download",
+    "upload": "Upload",
+    "share": "Share",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "view_more": "View More",
+    "view_less": "View Less",
+    "read_more": "Read More",
+    "learn_more": "Learn More"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "blog": "Blog",
+    "contact": "Contact",
+    "portfolio": "Portfolio"
+  },
+  "hero": {
+    "greeting": "Hello, I'm",
+    "title": "Full-Stack Developer",
+    "subtitle": "I create amazing web experiences with modern technologies",
+    "cta_primary": "View My Work",
+    "cta_secondary": "Get In Touch"
+  },
+  "about": {
+    "title": "About Me",
+    "subtitle": "Passionate developer with expertise in modern web technologies",
+    "description": "I'm a full-stack developer with {{years}} years of experience building scalable web applications. I specialize in React, Node.js, Python, and cloud technologies.",
+    "skills_title": "Skills & Technologies",
+    "experience_title": "Experience",
+    "education_title": "Education"
+  },
+  "projects": {
+    "title": "My Projects",
+    "subtitle": "A collection of my latest work and side projects",
+    "view_project": "View Project",
+    "view_code": "View Code",
+    "live_demo": "Live Demo",
+    "technologies_used": "Technologies Used",
+    "project_details": "Project Details",
+    "featured_projects": "Featured Projects",
+    "all_projects": "All Projects",
+    "filter_by_tech": "Filter by Technology"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Thoughts, tutorials, and insights about web development",
+    "read_article": "Read Article",
+    "published_on": "Published on",
+    "by_author": "by {{author}}",
+    "reading_time": "{{minutes}} min read",
+    "categories": "Categories",
+    "tags": "Tags",
+    "recent_posts": "Recent Posts",
+    "popular_posts": "Popular Posts",
+    "related_posts": "Related Posts",
+    "no_posts": "No blog posts found"
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "subtitle": "Let's discuss your project or just say hello",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "subject": "Subject",
+      "message": "Message",
+      "send": "Send Message",
+      "sending": "Sending...",
+      "success": "Message sent successfully! I'll get back to you soon.",
+      "error": "Failed to send message. Please try again or contact me directly."
+    },
+    "info": {
+      "email": "Email",
+      "phone": "Phone",
+      "location": "Location",
+      "social": "Social Media"
+    },
+    "alternative": "Or reach out directly at",
+    "response_time": "I typically respond within 24 hours"
+  },
+  "footer": {
+    "copyright": "© {{year}} {{name}}. All rights reserved.",
+    "built_with": "Built with ❤️ using React and TypeScript",
+    "social_links": "Follow me on social media",
+    "quick_links": "Quick Links",
+    "privacy_policy": "Privacy Policy",
+    "terms_of_service": "Terms of Service"
+  },
+  "forms": {
+    "validation": {
+      "required": "This field is required",
+      "email": "Please enter a valid email address",
+      "min_length": "Must be at least {{min}} characters",
+      "max_length": "Must be no more than {{max}} characters",
+      "password_strength": "Password must contain at least 8 characters with uppercase, lowercase, number, and special character"
+    }
+  },
+  "errors": {
+    "404": {
+      "title": "Page Not Found",
+      "message": "The page you're looking for doesn't exist.",
+      "go_home": "Go Home"
+    },
+    "500": {
+      "title": "Server Error",
+      "message": "Something went wrong on our end.",
+      "try_again": "Try Again"
+    },
+    "network": {
+      "title": "Network Error",
+      "message": "Please check your internet connection and try again.",
+      "retry": "Retry"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to main content",
+    "toggle_navigation": "Toggle navigation menu",
+    "toggle_theme": "Toggle dark/light theme",
+    "close_modal": "Close modal",
+    "open_menu": "Open menu",
+    "close_menu": "Close menu",
+    "next_slide": "Next slide",
+    "previous_slide": "Previous slide",
+    "play_video": "Play video",
+    "pause_video": "Pause video"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "toggle": "Toggle theme"
+  },
+  "language": {
+    "select": "Select Language",
+    "english": "English",
+    "spanish": "Español",
+    "french": "Français"
+  }
+}

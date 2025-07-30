@@ -1,0 +1,77 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "save": "Guardar",
+    "close": "Cerrar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "download": "Descargar",
+    "upload": "Subir",
+    "share": "Compartir",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "view_more": "Ver Más",
+    "view_less": "Ver Menos",
+    "read_more": "Leer Más",
+    "learn_more": "Saber Más"
+  },
+  "navigation": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "projects": "Proyectos",
+    "blog": "Blog",
+    "contact": "Contacto",
+    "portfolio": "Portafolio"
+  },
+  "hero": {
+    "greeting": "Hola, soy",
+    "title": "Desarrollador Full-Stack",
+    "subtitle": "Creo experiencias web increíbles con tecnologías modernas",
+    "cta_primary": "Ver Mi Trabajo",
+    "cta_secondary": "Contactar"
+  },
+  "about": {
+    "title": "Acerca de Mí",
+    "subtitle": "Desarrollador apasionado con experiencia en tecnologías web modernas",
+    "description": "Soy un desarrollador full-stack con {{years}} años de experiencia construyendo aplicaciones web escalables. Me especializo en React, Node.js, Python y tecnologías en la nube.",
+    "skills_title": "Habilidades y Tecnologías",
+    "experience_title": "Experiencia",
+    "education_title": "Educación"
+  },
+  "projects": {
+    "title": "Mis Proyectos",
+    "subtitle": "Una colección de mi trabajo más reciente y proyectos personales",
+    "view_project": "Ver Proyecto",
+    "view_code": "Ver Código",
+    "live_demo": "Demo en Vivo",
+    "technologies_used": "Tecnologías Utilizadas",
+    "project_details": "Detalles del Proyecto",
+    "featured_projects": "Proyectos Destacados",
+    "all_projects": "Todos los Proyectos",
+    "filter_by_tech": "Filtrar por Tecnología"
+  },
+  "contact": {
+    "title": "Ponte en Contacto",
+    "subtitle": "Hablemos sobre tu proyecto o simplemente saluda",
+    "form": {
+      "name": "Nombre",
+      "email": "Correo",
+      "subject": "Asunto",
+      "message": "Mensaje",
+      "send": "Enviar Mensaje",
+      "sending": "Enviando...",
+      "success": "¡Mensaje enviado con éxito! Te responderé pronto.",
+      "error": "Error al enviar el mensaje. Inténtalo de nuevo o contáctame directamente."
+    }
+  }
+}
